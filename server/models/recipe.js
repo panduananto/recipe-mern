@@ -1,6 +1,6 @@
 import mongoose from 'mongoose';
 
-const RecipesSchema = mongoose.Schema({
+const RecipeSchema = mongoose.Schema({
   title: String,
   tags: [String],
   creator: String,
@@ -16,6 +16,6 @@ const RecipesSchema = mongoose.Schema({
   updatedAt: Date,
 });
 
-const Recipes = mongoose.model('Recipes', RecipesSchema);
+const Recipe = mongoose.model('Recipe', RecipeSchema);
 
-export default Recipes;
+export default Recipe;

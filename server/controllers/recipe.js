@@ -1,8 +1,8 @@
-import Recipes from '../models/recipes.js';
+import Recipe from '../models/recipe.js';
 
-export const getRecipes = async (req, res) => {
+export const getRecipe = async (req, res) => {
   try {
-    const recipes = await Recipes.find();
+    const recipes = await Recipe.find();
 
     res.status(200).json(recipes);
   } catch (error) {
@@ -12,7 +12,7 @@ export const getRecipes = async (req, res) => {
 
 export const createRecipe = async (req, res) => {
   const recipe = req.body;
-  const newRecipe = new Recipes(recipe);
+  const newRecipe = new Recipe(recipe);
 
   try {
     await newRecipe.save();
