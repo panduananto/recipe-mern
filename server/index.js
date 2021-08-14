@@ -2,6 +2,8 @@ import express from 'express';
 import mongoose from 'mongoose';
 import cors from 'cors';
 
+import recipesRouter from './routes/recipes.js';
+
 const CONNECTION_URL = 'mongodb+srv://pandu:pandu123@cluster0.itnql.mongodb.net/myFirstDatabase?retryWrites=true&w=majority';
 const PORT = process.env.PORT || 3001;
 const MONGOOSE_OPTION = { useNewUrlParser: true, useUnifiedTopology: true, useFindAndModify: false };
@@ -16,3 +18,5 @@ mongoose
   .connect(CONNECTION_URL, MONGOOSE_OPTION)
   .then(() => app.listen(PORT, () => console.log(`Running on port: ${PORT}`)))
   .catch((error) => console.log(error.message));
+
+app.use('/api/recipes', recipesRouter);
