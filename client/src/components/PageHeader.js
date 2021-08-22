@@ -13,7 +13,7 @@ function PageHeader() {
         <button className="rounded-full bg-[#f6f6f6] focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-[#f6f6f6] focus:ring-red-900">
           <img
             src="https://images.unsplash.com/photo-1534528741775-53994a69daeb?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80"
-            alt="photo profile"
+            alt="user profile"
             className="h-8 sm:h-10 w-8 sm:w-10 rounded-full"
           />
         </button>

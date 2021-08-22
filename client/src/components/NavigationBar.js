@@ -1,4 +1,5 @@
 import React from 'react';
+import { NavLink } from 'react-router-dom';
 
 function NavigationBar() {
   const navigationItem = [
@@ -14,7 +15,7 @@ function NavigationBar() {
           />
         </svg>
       ),
-      link: '#',
+      link: '/',
     },
     {
       text: 'Add Recipe',
@@ -23,7 +24,7 @@ function NavigationBar() {
           <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 4v16m8-8H4" />
         </svg>
       ),
-      link: '#',
+      link: '/add-recipe',
     },
     {
       text: 'Account',
@@ -37,7 +38,7 @@ function NavigationBar() {
           />
         </svg>
       ),
-      link: '#',
+      link: '/profile',
     },
   ];
 
@@ -46,14 +47,16 @@ function NavigationBar() {
       <div className="flex items-center justify-center h-full w-full sm:max-w-screen-lg mx-auto px-4">
         <ul className="flex items-center justify-evenly w-full">
           {navigationItem.map((item, index) => (
-            <li key={index}>
-              <a
-                href={item.link}
+            <li key={item.text}>
+              <NavLink
+                exact={item.link === '/' ? true : false}
+                to={item.link}
                 className="inline-flex flex-col items-center justify-center space-y-1 text-center text-gray-500 hover:text-red-900"
+                activeClassName="text-red-900"
               >
                 {item.icon}
-                <span>{item.text}</span>
-              </a>
+                <span className="text-xs font-thin sm:text-base">{item.text}</span>
+              </NavLink>
             </li>
           ))}
         </ul>
