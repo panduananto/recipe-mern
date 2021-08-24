@@ -10,21 +10,23 @@ import Home from './components/Home';
 function App() {
   return (
     <Router>
-      <div>
+      <main className="flex flex-col w-full min-h-screen">
         <PageHeader></PageHeader>
-        <Switch>
-          <Route path="/add-recipe">
-            <AddRecipe></AddRecipe>
-          </Route>
-          <Route path="/profile">
-            <Profile></Profile>
-          </Route>
-          <Route exact path="/">
-            <Home></Home>
-          </Route>
-        </Switch>
+        <section className="flex flex-col flex-1 py-20">
+          <Switch>
+            <Route path="/add-recipe">
+              <AddRecipe></AddRecipe>
+            </Route>
+            <Route path="/profile">
+              <Profile></Profile>
+            </Route>
+            <Route exact path="/">
+              <Home></Home>
+            </Route>
+          </Switch>
+        </section>
         <NavigationBar></NavigationBar>
-      </div>
+      </main>
     </Router>
   );
 }

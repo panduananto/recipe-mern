@@ -3,7 +3,10 @@ import mongoose from 'mongoose';
 const RecipeSchema = mongoose.Schema({
   title: String,
   tags: [String],
-  creator: String,
+  creator: {
+    type: String,
+    default: 'user 1',
+  },
   images: String,
   rating: {
     type: Number,

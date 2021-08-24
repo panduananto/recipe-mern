@@ -1,7 +1,13 @@
 import React from 'react';
 
+import Form from './Form';
+
 function AddRecipe() {
-  return <div></div>;
+  return (
+    <>
+      <Form></Form>
+    </>
+  );
 }
 
 export default AddRecipe;

@@ -51,8 +51,10 @@ function NavigationBar() {
               <NavLink
                 exact={item.link === '/' ? true : false}
                 to={item.link}
-                className="inline-flex flex-col items-center justify-center space-y-1 text-center text-gray-500 hover:text-red-900"
-                activeClassName="text-red-900"
+                className="inline-flex flex-col items-center justify-center space-y-1 text-center text-gray-500 hover:text-red-700"
+                activeStyle={{
+                  color: 'rgba(185, 28, 28, 1)',
+                }}
               >
                 {item.icon}
                 <span className="text-xs font-thin sm:text-base">{item.text}</span>

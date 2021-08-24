@@ -8,9 +8,9 @@ function PageHeader() {
       <div className="flex items-center justify-between h-full w-full sm:max-w-screen-lg mx-auto px-4">
         <a href="" className="inline-flex items-center space-x-2">
           <img src={logo} alt="site logo" className="h-8 sm:h-10 w-8 sm:w-10" />
-          <span className="font-serif font-extrabold text-red-900">YourRecipe</span>
+          <span className="font-serif font-extrabold text-red-700">YourRecipe</span>
         </a>
-        <button className="rounded-full bg-[#f6f6f6] focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-[#f6f6f6] focus:ring-red-900">
+        <button className="rounded-full bg-[#f6f6f6] focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-[#f6f6f6] focus:ring-red-700">
           <img
             src="https://images.unsplash.com/photo-1534528741775-53994a69daeb?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80"
             alt="user profile"
