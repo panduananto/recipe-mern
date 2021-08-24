@@ -1,10 +1,12 @@
-import { React } from 'react';
+import { React, useState } from 'react';
 import Ingredient from './Ingredient';
 
 function Form() {
+  const [recipe, setRecipe] = useState({ title: '', tags: '', description: '', ingredient: '' });
+
   return (
     <div className="w-full sm:max-w-screen-lg mx-auto">
-      <form action="">
+      <form action="" className="divide-y-2 divide-solid divide-red-700">
         <div className="px-4 py-6 space-y-6">
           <div className="flex justify-center px-6 pt-5 pb-6 border-2 border-gray-300 border-dashed rounded-md">
             <div className="space-y-1 text-center">
@@ -82,6 +84,14 @@ function Form() {
           <div>
             <Ingredient></Ingredient>
           </div>
+        </div>
+        <div className="flex justify-end gap-2 px-4 py-6">
+          <button className="px-4 py-2 rounded-md bg-gray-200 hover:bg-gray-300 text-sm sm:text-base text-gray-500 font-light focus:outline-none focus:ring-2 focus:ring-gray-200 focus:ring-offset-2 focus:ring-offset-[#f6f6f6]">
+            Reset
+          </button>
+          <button className="px-4 py-2 rounded-md bg-red-700 hover:bg-red-600 text-sm sm:text-base text-white font-light focus:outline-none focus:ring-2 focus:ring-red-600 focus:ring-offset-2 focus:ring-offset-[#f6f6f6]">
+            Add recipe
+          </button>
         </div>
       </form>
     </div>

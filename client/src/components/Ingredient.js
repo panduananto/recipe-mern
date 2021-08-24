@@ -1,7 +1,9 @@
 import { React, useState } from 'react';
 
+import { v4 as uuidv4 } from 'uuid';
+
 function Ingredient() {
-  const [ingredientList, setIngredient] = useState([{ name: '', amount: '' }]);
+  const [ingredientList, setIngredient] = useState([{ id: uuidv4(), name: '', amount: '' }]);
 
   const handleChangeIngredient = (event, index) => {
     const { name, value } = event.target;
@@ -12,12 +14,15 @@ function Ingredient() {
   };
 
   const handleAddMoreIngredient = () => {
-    setIngredient([...ingredientList, { name: '', amount: '' }]);
+    setIngredient([...ingredientList, { id: uuidv4(), name: '', amount: '' }]);
   };
 
-  const handleRemoveIngredient = (index) => {
+  const handleRemoveIngredient = (id) => {
     const ingredientListTemp = [...ingredientList];
-    ingredientListTemp.splice(index, 1);
+    ingredientListTemp.splice(
+      ingredientList.findIndex((ingredient) => ingredient.id === id),
+      1,
+    );
 
     setIngredient(ingredientListTemp);
   };
@@ -29,7 +34,7 @@ function Ingredient() {
         <div className="mt-1 grid grid-cols-3 gap-2">
           {ingredientList.map((ingredient, index) => {
             return (
-              <div key={index} className="col-span-3 sm:col-span-2">
+              <div key={ingredient.id} className="col-span-3 sm:col-span-2">
                 <label htmlFor="name" className="sr-only">
                   Ingredient-{index + 1}
                 </label>
@@ -38,6 +43,7 @@ function Ingredient() {
                     id={`ingredient-${index + 1}`}
                     name="name"
                     type="text"
+                    autoComplete="off"
                     className="block w-full px-4 py-2 border border-solid border-gray-300 rounded-l-md bg-gray-50 shadow-sm font-thin focus:outline-none focus:ring-2 focus:ring-red-700 focus:border-red-700"
                     placeholder="garlic"
                     value={ingredient.name}
@@ -49,6 +55,7 @@ function Ingredient() {
                       id={`amount-ingredient-${index + 1}`}
                       name="amount"
                       type="text"
+                      autoComplete="off"
                       className="block w-full px-4 py-2 border border-solid border-gray-300 rounded-r-md bg-white shadow-sm font-thin focus:outline-none focus:ring-2 focus:ring-red-700 focus:border-red-700"
                       placeholder="1 clove"
                       value={ingredient.amount}
@@ -59,7 +66,9 @@ function Ingredient() {
                     {ingredientList.length !== 1 && (
                       <button
                         className="border-none shadow-none bg-red-200 hover:bg-red-300 rounded-md px-3 focus:outline-none focus:ring-2 focus:ring-red-700"
-                        onClick={() => handleRemoveIngredient(index)}
+                        onClick={() => {
+                          handleRemoveIngredient(ingredient.id);
+                        }}
                       >
                         <svg
                           xmlns="http://www.w3.org/2000/svg"

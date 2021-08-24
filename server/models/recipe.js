@@ -8,6 +8,8 @@ const RecipeSchema = mongoose.Schema({
     default: 'user 1',
   },
   images: String,
+  description: String,
+  ingredient: [{ name: String, amount: String }],
   rating: {
     type: Number,
     default: 0,
@@ -16,7 +18,10 @@ const RecipeSchema = mongoose.Schema({
     type: Date,
     default: Date.now,
   },
-  updatedAt: Date,
+  updatedAt: {
+    type: Date,
+    default: Date.now,
+  },
 });
 
 const Recipe = mongoose.model('Recipe', RecipeSchema);
