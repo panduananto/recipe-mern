@@ -2,7 +2,7 @@ import { React, useState } from 'react';
 
 import { v4 as uuidv4 } from 'uuid';
 
-function Ingredient() {
+function Ingredient({ setRecipe }) {
   const [ingredientList, setIngredient] = useState([{ id: uuidv4(), name: '', amount: '' }]);
 
   const handleChangeIngredient = (event, index) => {
@@ -10,7 +10,10 @@ function Ingredient() {
     const ingredientListTemp = [...ingredientList];
     ingredientListTemp[index][name] = value;
 
+    const ingredientNameAmount = ingredientListTemp.map(({ name, amount }) => ({ name, amount }));
+
     setIngredient(ingredientListTemp);
+    setRecipe((recipe) => ({ ...recipe, ingredient: ingredientNameAmount }));
   };
 
   const handleAddMoreIngredient = () => {
@@ -44,7 +47,7 @@ function Ingredient() {
                     name="name"
                     type="text"
                     autoComplete="off"
-                    className="block w-full px-4 py-2 border border-solid border-gray-300 rounded-l-md bg-gray-50 shadow-sm font-thin focus:outline-none focus:ring-2 focus:ring-red-700 focus:border-red-700"
+                    className="block w-full px-4 py-2 border border-solid border-gray-300 rounded-l-md bg-gray-50 shadow-sm font-thin focus:outline-none focus:ring-1 focus:ring-red-700 focus:border-red-700"
                     placeholder="garlic"
                     value={ingredient.name}
                     onChange={(event) => handleChangeIngredient(event, index)}
@@ -56,7 +59,7 @@ function Ingredient() {
                       name="amount"
                       type="text"
                       autoComplete="off"
-                      className="block w-full px-4 py-2 border border-solid border-gray-300 rounded-r-md bg-white shadow-sm font-thin focus:outline-none focus:ring-2 focus:ring-red-700 focus:border-red-700"
+                      className="block w-full px-4 py-2 border border-solid border-gray-300 rounded-r-md bg-white shadow-sm font-thin focus:outline-none focus:ring-1 focus:ring-red-700 focus:border-red-700"
                       placeholder="1 clove"
                       value={ingredient.amount}
                       onChange={(event) => handleChangeIngredient(event, index)}
