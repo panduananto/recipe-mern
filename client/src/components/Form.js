@@ -1,16 +1,18 @@
 import { React, useState, useRef } from 'react';
+import { connect } from 'react-redux';
 
 import Ingredient from './Ingredient';
+import { createRecipe } from '../actions/recipe';
 import imageToBase64 from '../utils/imageToBase64';
 
-function Form() {
+function Form(props) {
   const imageInputEl = useRef();
   const [recipe, setRecipe] = useState({ title: '', tags: '', description: '', ingredient: '', image: '' });
 
   const handleSubmit = (event) => {
     event.preventDefault();
 
-    console.log(recipe);
+    props.createRecipe(recipe);
   };
 
   return (
@@ -124,4 +126,10 @@ function Form() {
   );
 }
 
-export default Form;
+const mapDispatchToProps = (dispatch) => {
+  return {
+    createRecipe: (recipe) => dispatch(createRecipe(recipe)),
+  };
+};
+
+export default connect(null, mapDispatchToProps)(Form);
