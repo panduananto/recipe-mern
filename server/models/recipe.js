@@ -2,14 +2,14 @@ import mongoose from 'mongoose';
 
 const RecipeSchema = mongoose.Schema({
   title: String,
-  tags: [String],
+  tags: [{ type: String, trim: true }],
   creator: {
     type: String,
     default: 'user 1',
   },
   images: String,
   description: String,
-  ingredient: [{ name: String, amount: String }],
+  ingredient: [{ name: { type: String, trim: true }, amount: { type: String, trim: true } }],
   rating: {
     type: Number,
     default: 0,

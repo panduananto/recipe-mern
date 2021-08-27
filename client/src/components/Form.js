@@ -2,7 +2,9 @@ import { React, useState, useRef } from 'react';
 import { connect } from 'react-redux';
 
 import Ingredient from './Ingredient';
-import { createRecipe } from '../actions/recipe';
+import Loading from './Loading';
+
+import { createRecipe } from '../redux/actions/recipe';
 import imageToBase64 from '../utils/imageToBase64';
 
 function Form(props) {
@@ -17,6 +19,7 @@ function Form(props) {
 
   return (
     <div className="w-full sm:max-w-screen-lg mx-auto">
+      {props.loading && <Loading></Loading>}
       <form action="" className="divide-y-2 divide-solid divide-red-700" onSubmit={(event) => handleSubmit(event)}>
         <div className="px-4 py-6 space-y-6">
           <div className="flex justify-center px-6 pt-5 pb-6 border-2 border-gray-300 border-dashed rounded-md">
@@ -126,10 +129,18 @@ function Form(props) {
   );
 }
 
-const mapDispatchToProps = (dispatch) => {
+const mapStateToProps = (state) => {
   return {
-    createRecipe: (recipe) => dispatch(createRecipe(recipe)),
+    loading: state.loading,
   };
 };
 
-export default connect(null, mapDispatchToProps)(Form);
+const mapDispatchToProps = (dispatch) => {
+  return {
+    createRecipe: (recipe) => {
+      dispatch(createRecipe(recipe));
+    },
+  };
+};
+
+export default connect(mapStateToProps, mapDispatchToProps)(Form);
