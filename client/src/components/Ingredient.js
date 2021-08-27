@@ -1,33 +1,28 @@
-import { React, useState } from 'react';
+import React from 'react';
 
 import { v4 as uuidv4 } from 'uuid';
 
-function Ingredient({ setRecipe }) {
-  const [ingredientList, setIngredient] = useState([{ id: uuidv4(), name: '', amount: '' }]);
-
+function Ingredient({ ingredient: ingredients, setRecipe }) {
   const handleChangeIngredient = (event, index) => {
     const { name, value } = event.target;
-    const ingredientListTemp = [...ingredientList];
+    const ingredientListTemp = [...ingredients];
     ingredientListTemp[index][name] = value;
 
-    const ingredientNameAmount = ingredientListTemp.map(({ name, amount }) => ({ name, amount }));
-
-    setIngredient(ingredientListTemp);
-    setRecipe((recipe) => ({ ...recipe, ingredient: ingredientNameAmount }));
+    setRecipe((recipe) => ({ ...recipe, ingredient: ingredientListTemp }));
   };
 
   const handleAddMoreIngredient = () => {
-    setIngredient([...ingredientList, { id: uuidv4(), name: '', amount: '' }]);
+    setRecipe((recipe) => ({ ...recipe, ingredient: [...ingredients, { id: uuidv4(), name: '', amount: '' }] }));
   };
 
   const handleRemoveIngredient = (id) => {
-    const ingredientListTemp = [...ingredientList];
+    const ingredientListTemp = [...ingredients];
     ingredientListTemp.splice(
-      ingredientList.findIndex((ingredient) => ingredient.id === id),
+      ingredients.findIndex((ingredient) => ingredient.id === id),
       1,
     );
 
-    setIngredient(ingredientListTemp);
+    setRecipe((recipe) => ({ ...recipe, ingredient: ingredientListTemp }));
   };
 
   return (
@@ -35,7 +30,7 @@ function Ingredient({ setRecipe }) {
       <fieldset>
         <legend className="font-medium text-gray-700">Ingredients</legend>
         <div className="mt-1 grid grid-cols-3 gap-2">
-          {ingredientList.map((ingredient, index) => {
+          {ingredients.map((ingredient, index) => {
             return (
               <div key={ingredient.id} className="col-span-3 sm:col-span-2">
                 <label htmlFor="name" className="sr-only">
@@ -66,7 +61,7 @@ function Ingredient({ setRecipe }) {
                     />
                   </div>
                   <div className="flex gap-1 ml-1">
-                    {ingredientList.length !== 1 && (
+                    {ingredients.length !== 1 && (
                       <button
                         className="border-none shadow-none bg-red-200 hover:bg-red-300 rounded-md px-3 focus:outline-none focus:ring-2 focus:ring-red-700"
                         onClick={() => {
@@ -84,7 +79,7 @@ function Ingredient({ setRecipe }) {
                         </svg>
                       </button>
                     )}
-                    {ingredientList.length - 1 === index && (
+                    {ingredients.length - 1 === index && (
                       <button
                         className="border-none shadow-none bg-green-200 hover:bg-green-300 rounded-md px-3 focus:outline-none focus:ring-2 focus:ring-green-700"
                         onClick={handleAddMoreIngredient}

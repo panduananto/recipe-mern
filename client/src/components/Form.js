@@ -1,6 +1,8 @@
 import { React, useState, useRef } from 'react';
 import { connect } from 'react-redux';
 
+import { v4 as uuidv4 } from 'uuid';
+
 import Ingredient from './Ingredient';
 import Loading from './Loading';
 
@@ -9,12 +11,22 @@ import imageToBase64 from '../utils/imageToBase64';
 
 function Form(props) {
   const imageInputEl = useRef();
-  const [recipe, setRecipe] = useState({ title: '', tags: '', description: '', ingredient: '', image: '' });
+  const [recipe, setRecipe] = useState({
+    title: '',
+    tags: '',
+    description: '',
+    ingredient: [{ id: uuidv4(), name: '', amount: '' }],
+    image: '',
+  });
 
   const handleSubmit = (event) => {
     event.preventDefault();
 
-    props.createRecipe(recipe);
+    const ingredientAndAmount = recipe.ingredient.map(({ name, amount }) => ({ name, amount }));
+    const recipeToInput = { ...recipe, ingredient: ingredientAndAmount };
+
+    props.createRecipe(recipeToInput);
+    setRecipe({ title: '', tags: '', description: '', ingredient: [{ id: uuidv4(), name: '', amount: '' }], image: '' });
   };
 
   return (
@@ -113,7 +125,7 @@ function Form(props) {
             </div>
           </div>
           <div>
-            <Ingredient setRecipe={setRecipe}></Ingredient>
+            <Ingredient ingredient={recipe.ingredient} setRecipe={setRecipe}></Ingredient>
           </div>
         </div>
         <div className="flex justify-end gap-2 px-4 py-6">
