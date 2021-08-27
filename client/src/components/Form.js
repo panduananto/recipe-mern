@@ -19,6 +19,12 @@ function Form(props) {
     image: '',
   });
 
+  const resetForm = (event) => {
+    event.preventDefault();
+
+    setRecipe({ title: '', tags: '', description: '', ingredient: [{ id: uuidv4(), name: '', amount: '' }], image: '' });
+  };
+
   const handleSubmit = (event) => {
     event.preventDefault();
 
@@ -26,7 +32,7 @@ function Form(props) {
     const recipeToInput = { ...recipe, ingredient: ingredientAndAmount };
 
     props.createRecipe(recipeToInput);
-    setRecipe({ title: '', tags: '', description: '', ingredient: [{ id: uuidv4(), name: '', amount: '' }], image: '' });
+    resetForm();
   };
 
   return (
@@ -129,7 +135,11 @@ function Form(props) {
           </div>
         </div>
         <div className="flex justify-end gap-2 px-4 py-6">
-          <button className="px-4 py-2 rounded-md bg-gray-200 hover:bg-gray-300 text-sm sm:text-base text-gray-500 font-light focus:outline-none focus:ring-2 focus:ring-gray-200 focus:ring-offset-2 focus:ring-offset-[#f6f6f6]">
+          <button
+            type="button"
+            className="px-4 py-2 rounded-md bg-gray-200 hover:bg-gray-300 text-sm sm:text-base text-gray-500 font-light focus:outline-none focus:ring-2 focus:ring-gray-200 focus:ring-offset-2 focus:ring-offset-[#f6f6f6]"
+            onClick={(event) => resetForm(event)}
+          >
             Reset
           </button>
           <button className="px-4 py-2 rounded-md bg-red-700 hover:bg-red-600 text-sm sm:text-base text-white font-light focus:outline-none focus:ring-2 focus:ring-red-600 focus:ring-offset-2 focus:ring-offset-[#f6f6f6]">
