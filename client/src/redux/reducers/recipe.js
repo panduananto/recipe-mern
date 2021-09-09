@@ -5,7 +5,7 @@ const INITIAL_STATE = [];
 const recipeReducer = (state = INITIAL_STATE, action) => {
   switch (action.type) {
     case FETCH_ALL_RECIPE:
-      return state;
+      return action.payload;
     case CREATE_RECIPE:
       return [...state, action.payload];
     default:

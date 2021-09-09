@@ -1,6 +1,6 @@
 import * as api from '../../api/index';
 
-import { CREATE_RECIPE } from '../constants/recipe';
+import { CREATE_RECIPE, FETCH_ALL_RECIPE } from '../constants/recipe';
 import { START_LOADING, STOP_LOADING } from '../constants/loading';
 
 const createRecipe = (recipe) => async (dispatch) => {
@@ -13,7 +13,22 @@ const createRecipe = (recipe) => async (dispatch) => {
     dispatch({ type: STOP_LOADING });
   } catch (error) {
     console.log(error);
+    dispatch({ type: STOP_LOADING });
   }
 };
 
-export { createRecipe };
+const fetchRecipe = () => async (dispatch) => {
+  try {
+    dispatch({ type: START_LOADING });
+
+    const { data } = await api.fetchRecipe();
+
+    dispatch({ type: STOP_LOADING });
+    dispatch({ type: FETCH_ALL_RECIPE, payload: data });
+  } catch (error) {
+    console.log(error);
+    dispatch({ type: STOP_LOADING });
+  }
+};
+
+export { createRecipe, fetchRecipe };

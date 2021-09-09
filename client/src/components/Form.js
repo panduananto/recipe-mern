@@ -16,13 +16,12 @@ function Form(props) {
     tags: '',
     description: '',
     ingredient: [{ id: uuidv4(), name: '', amount: '' }],
-    image: '',
+    images: '',
   });
 
-  const resetForm = (event) => {
-    event.preventDefault();
-
-    setRecipe({ title: '', tags: '', description: '', ingredient: [{ id: uuidv4(), name: '', amount: '' }], image: '' });
+  const resetForm = () => {
+    imageInputEl.current = undefined;
+    setRecipe({ title: '', tags: '', description: '', ingredient: [{ id: uuidv4(), name: '', amount: '' }], images: '' });
   };
 
   const handleSubmit = (event) => {
@@ -31,8 +30,9 @@ function Form(props) {
     const ingredientAndAmount = recipe.ingredient.map(({ name, amount }) => ({ name, amount }));
     const recipeToInput = { ...recipe, ingredient: ingredientAndAmount };
 
-    props.createRecipe(recipeToInput);
-    resetForm();
+    props.createRecipe(recipeToInput).then(() => {
+      resetForm();
+    });
   };
 
   return (
@@ -68,7 +68,7 @@ function Form(props) {
                     type="file"
                     className="sr-only"
                     ref={imageInputEl}
-                    onChange={(event) => imageToBase64(event, (base64) => setRecipe({ ...recipe, image: base64 }))}
+                    onChange={(event) => imageToBase64(event, (base64) => setRecipe({ ...recipe, images: base64 }))}
                   ></input>
                 </label>
               </div>
@@ -138,7 +138,7 @@ function Form(props) {
           <button
             type="button"
             className="px-4 py-2 rounded-md bg-gray-200 hover:bg-gray-300 text-sm sm:text-base text-gray-500 font-light focus:outline-none focus:ring-2 focus:ring-gray-200 focus:ring-offset-2 focus:ring-offset-[#f6f6f6]"
-            onClick={(event) => resetForm(event)}
+            onClick={resetForm}
           >
             Reset
           </button>
@@ -160,7 +160,7 @@ const mapStateToProps = (state) => {
 const mapDispatchToProps = (dispatch) => {
   return {
     createRecipe: (recipe) => {
-      dispatch(createRecipe(recipe));
+      return Promise.resolve(dispatch(createRecipe(recipe)));
     },
   };
 };
