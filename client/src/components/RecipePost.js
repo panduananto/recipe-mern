@@ -5,7 +5,7 @@ import placholderMissingImage from '../assets/placeholder-missing-image.png';
 
 function RecipePost({ data }) {
   return (
-    <div key={data._id} className="border border-solid rounded-md border-gray-200 overflow-hidden">
+    <div className="border border-solid rounded-md border-gray-200 overflow-hidden">
       <Link to={`/recipe/${data._id}`} className="block w-full h-40">
         <img
           src={data.images ? data.images : placholderMissingImage}

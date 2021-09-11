@@ -7,6 +7,7 @@ import { fetchRecipe } from '../redux/actions/recipe';
 import { STOP_LOADING } from '../redux/constants/loading';
 
 function Home(props) {
+  const { recipes } = props.recipes;
   const { fetchRecipe, stopLoading } = props;
 
   useEffect(() => {
@@ -20,9 +21,9 @@ function Home(props) {
       <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6 md:gap-8 px-4 py-6">
         {props.loading ? (
           <Loading></Loading>
-        ) : props.recipe.length !== 0 ? (
-          props.recipe.map((item) => {
-            return <RecipePost data={item}></RecipePost>;
+        ) : recipes.length !== 0 ? (
+          recipes.map((item) => {
+            return <RecipePost data={item} key={item._id}></RecipePost>;
           })
         ) : (
           <p>Something went wrong</p>
@@ -35,7 +36,7 @@ function Home(props) {
 const mapStateToProps = (state) => {
   return {
     loading: state.loading,
-    recipe: state.recipe,
+    recipes: state.recipes,
   };
 };
 

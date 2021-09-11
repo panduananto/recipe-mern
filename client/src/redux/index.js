@@ -4,7 +4,7 @@ import thunk from 'redux-thunk';
 import recipeReducer from './reducers/recipe';
 import loadingReducer from './reducers/loading';
 
-const rootReducer = combineReducers({ recipe: recipeReducer, loading: loadingReducer });
+const rootReducer = combineReducers({ recipes: recipeReducer, loading: loadingReducer });
 const initialState = {};
 const middleware = [thunk];
 
