@@ -7,7 +7,7 @@ import Ingredient from './Ingredient';
 import Loading from './Loading';
 
 import { createRecipe } from '../redux/actions/recipe';
-import imageToBase64 from '../utils/imageToBase64';
+import { imgCompress } from '../utils/image';
 
 function Form(props) {
   const imageInputEl = useRef();
@@ -68,7 +68,7 @@ function Form(props) {
                     type="file"
                     className="sr-only"
                     ref={imageInputEl}
-                    onChange={(event) => imageToBase64(event, (base64) => setRecipe({ ...recipe, images: base64 }))}
+                    onChange={(event) => imgCompress(event, (base64) => setRecipe({ ...recipe, images: base64 }))}
                   ></input>
                 </label>
               </div>
