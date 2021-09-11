@@ -27,10 +27,7 @@ function RecipePost({ data }) {
         </div>
         <p className="font-light">
           By{' '}
-          <span
-            href="#"
-            className="relative font-normal after:absolute after:inset-x-0 after:bottom-[-1px] after:h-[1px] after:w-full after:bg-red-700 hover:after:bg-red-600"
-          >
+          <span className="relative font-normal after:absolute after:inset-x-0 after:bottom-[-1px] after:h-[1px] after:w-full after:bg-red-700 hover:after:bg-red-600">
             {data.creator}
           </span>
         </p>
