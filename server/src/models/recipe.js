@@ -10,6 +10,7 @@ const RecipeSchema = mongoose.Schema({
   images: String,
   description: String,
   ingredient: [{ name: { type: String, trim: true }, amount: { type: String, trim: true } }],
+  step: [{ description: { type: String, trim: true }, image: { type: String } }],
   rating: {
     type: Number,
     default: 0,
