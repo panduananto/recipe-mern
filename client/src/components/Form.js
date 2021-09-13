@@ -1,34 +1,44 @@
-import { React, useState, useRef } from 'react';
+import { React, useRef, useState } from 'react';
 import { connect } from 'react-redux';
 
 import { v4 as uuidv4 } from 'uuid';
 
 import Ingredient from './Ingredient';
 import Loading from './Loading';
+import Steps from './Steps';
+import ImageUpload from './ImageUpload';
 
 import { createRecipe } from '../redux/actions/recipe';
-import { imgCompress } from '../utils/image';
 
 function Form(props) {
-  const imageInputEl = useRef();
+  const imageUploadRef = useRef();
   const [recipe, setRecipe] = useState({
     title: '',
     tags: '',
     description: '',
     ingredient: [{ id: uuidv4(), name: '', amount: '' }],
+    step: [{ id: uuidv4(), description: '', image: '' }],
     images: '',
   });
 
   const resetForm = () => {
-    imageInputEl.current = undefined;
-    setRecipe({ title: '', tags: '', description: '', ingredient: [{ id: uuidv4(), name: '', amount: '' }], images: '' });
+    imageUploadRef.current.clearImageFileName();
+    setRecipe({
+      title: '',
+      tags: '',
+      description: '',
+      ingredient: [{ id: uuidv4(), name: '', amount: '' }],
+      step: [{ id: uuidv4(), description: '', image: '' }],
+      images: '',
+    });
   };
 
   const handleSubmit = (event) => {
     event.preventDefault();
 
     const ingredientAndAmount = recipe.ingredient.map(({ name, amount }) => ({ name, amount }));
-    const recipeToInput = { ...recipe, ingredient: ingredientAndAmount };
+    const stepAndImage = recipe.step.map(({ description, image }) => ({ description, image }));
+    const recipeToInput = { ...recipe, ingredient: ingredientAndAmount, step: stepAndImage };
 
     props.createRecipe(recipeToInput).then(() => {
       resetForm();
@@ -40,46 +50,18 @@ function Form(props) {
       {props.loading && <Loading></Loading>}
       <form action="" className="divide-y-2 divide-solid divide-red-700" onSubmit={(event) => handleSubmit(event)}>
         <div className="px-4 py-6 space-y-6">
-          <div className="flex justify-center px-6 pt-5 pb-6 border-2 border-gray-300 border-dashed rounded-md">
-            <div className="space-y-1 text-center">
-              <svg
-                xmlns="http://www.w3.org/2000/svg"
-                className="h-10 w-10 mx-auto text-gray-400"
-                fill="none"
-                viewBox="0 0 24 24"
-                stroke="currentColor"
-              >
-                <path
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                  strokeWidth={1}
-                  d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z"
-                />
-              </svg>
-              <div className="flex justify-center text-sm sm:text-base">
-                <label
-                  htmlFor="file-upload"
-                  className="relative cursor-pointer bg-white rounded-md font-medium text-red-700 hover:text-red-600 focus-within:outline-none focus-within:ring-2 focus-within:ring-offset-2 focus-within:ring-red-700"
-                >
-                  <span>Upload a file</span>
-                  <input
-                    id="file-upload"
-                    name="file-upload"
-                    type="file"
-                    className="sr-only"
-                    ref={imageInputEl}
-                    onChange={(event) => imgCompress(event, (base64) => setRecipe({ ...recipe, images: base64 }))}
-                  ></input>
-                </label>
-              </div>
-              <p className="text-sm sm:text-base truncate">
-                {imageInputEl.current !== undefined && imageInputEl.current.files[0]
-                  ? imageInputEl.current.files[0].name
-                  : 'No File Chosen'}
-              </p>
-              <p className="text-sm sm:text-base text-gray-500">Image upload up to 5 MB</p>
-            </div>
-          </div>
+          <ImageUpload
+            setImage={(event, callback) => {
+              const { files } = event.target;
+              callback(files).then((results) => setRecipe({ ...recipe, images: results }));
+            }}
+            containerStyle={'flex self-start justify-center px-6 pt-5 pb-6 border-2 border-gray-300 border-dashed rounded-md'}
+            fieldIdentity={'thumbnail-file-upload'}
+            fieldName={'images'}
+            fieldHelperText={'Image size up to 5 MB'}
+            width={'w-44'}
+            ref={imageUploadRef}
+          ></ImageUpload>
           <div>
             <label htmlFor="title" className="block font-medium text-gray-700">
               Title
@@ -132,6 +114,9 @@ function Form(props) {
           </div>
           <div>
             <Ingredient ingredient={recipe.ingredient} setRecipe={setRecipe}></Ingredient>
+          </div>
+          <div>
+            <Steps step={recipe.step} setRecipe={setRecipe}></Steps>
           </div>
         </div>
         <div className="flex justify-end gap-2 px-4 py-6">
