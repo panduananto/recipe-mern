@@ -13,8 +13,6 @@ function RecipeDetail(props) {
   const { fetchRecipeById, stopLoading } = props;
   const { id } = useParams();
 
-  console.log(props);
-
   useEffect(() => {
     fetchRecipeById(id);
 
@@ -51,7 +49,7 @@ function RecipeDetail(props) {
                   By <span className="font-normal">{recipe.creator}</span>
                 </p>
               </div>
-              <div className="rounded-xl overflow-hidden h-52 md:h-96">
+              <div className="rounded-xl overflow-hidden h-52 md:h-96 shadow-sm">
                 <img
                   src={recipe.images ? recipe.images : placholderMissingImage}
                   alt={recipe.title}
@@ -59,11 +57,42 @@ function RecipeDetail(props) {
                 />
               </div>
               <div className="space-y-4 before:content-[''] before:block before:h-[2px] before:w-full before:rounded-md before:bg-red-700 before:my-8">
-                <p className="font-bold text-2xl">Ingredients</p>
+                <p className="font-bold text-2xl text-gray-900">Ingredients</p>
                 <ul className="space-y-2">
                   {recipe.ingredient.map((item) => (
                     <li key={item._id} className="font-light">
                       {item.name} <span className="font-medium">({item.amount})</span>
+                    </li>
+                  ))}
+                </ul>
+              </div>
+              <div className="space-y-4 before:content-[''] before:block before:h-[2px] before:w-full before:rounded-md before:bg-red-700 before:my-8">
+                <p className="font-bold text-2xl text-gray-900">Steps to cook</p>
+                <ul className="space-y-12">
+                  {recipe.step.map((item, index) => (
+                    <li key={item._id} className="flex flex-col space-y-4">
+                      <div className="inline-flex items-center gap-2">
+                        <span>
+                          <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5" viewBox="0 0 20 20" fill="currentColor">
+                            <path
+                              fillRule="evenodd"
+                              d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z"
+                              clipRule="evenodd"
+                            />
+                          </svg>
+                        </span>
+                        <span className="font-medium">{`Step ${index + 1}`}</span>
+                      </div>
+                      <div className="grid grid-cols-3 gap-5">
+                        <p className="block col-span-3">{item.description}</p>
+                        {item.image ? (
+                          <div className="col-span-3 md:col-span-2 h-52 md:h-72 rounded-xl overflow-hidden shadow-sm">
+                            <img src={item.image} alt="" className="w-full h-full object-center object-cover" />
+                          </div>
+                        ) : (
+                          <></>
+                        )}
+                      </div>
                     </li>
                   ))}
                 </ul>
