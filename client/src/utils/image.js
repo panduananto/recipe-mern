@@ -10,11 +10,11 @@ const imageToBase64 = (event, callback) => {
   };
 };
 
-const imgCompress = (event, callback) => {
+const imgCompress = (value) => {
   const compress = new Compress();
-  const file = [...event.target.files];
+  const file = [...value];
 
-  compress
+  const compressedFile = compress
     .compress(file, {
       size: 0.3,
       quality: 0.8,
@@ -23,10 +23,13 @@ const imgCompress = (event, callback) => {
       resize: true,
     })
     .then((data) => {
-      const compressedBase64 = data[0].prefix + data[0].data;
+      const img = data[0];
+      const compressedBase64 = img.prefix + img.data;
 
-      callback(compressedBase64);
+      return compressedBase64;
     });
+
+  return compressedFile;
 };
 
 export { imageToBase64, imgCompress };
