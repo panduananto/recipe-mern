@@ -1,10 +1,13 @@
 import express from 'express';
 import mongoose from 'mongoose';
 import cors from 'cors';
+import dotenv from 'dotenv';
 
 import recipeRouter from './routes/recipe.js';
 
-const CONNECTION_URL = 'mongodb+srv://pandu:pandu123@cluster0.itnql.mongodb.net/myFirstDatabase?retryWrites=true&w=majority';
+dotenv.config();
+
+const CONNECTION_URL = process.env.CONNECTION_URL;
 const PORT = process.env.PORT || 3001;
 const MONGOOSE_OPTION = { useNewUrlParser: true, useUnifiedTopology: true, useFindAndModify: false };
 
