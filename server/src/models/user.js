@@ -1,4 +1,7 @@
 import mongoose from 'mongoose';
+import bcrypt from 'bcryptjs';
+
+const SALT_ROUND_FACTOR = 10;
 
 const UserSchema = mongoose.Schema({
   username: {
@@ -19,6 +22,24 @@ const UserSchema = mongoose.Schema({
   },
   resetPasswordToken: String,
   resetPasswordExpire: Date,
+  createdAt: {
+    type: Date,
+    default: Date.now,
+  },
+  updatedAt: {
+    type: Date,
+    default: Date.now,
+  },
+});
+
+UserSchema.pre('save', async function (next) {
+  if (!this.isModified('password')) {
+    next();
+  }
+
+  const salt = await bcrypt.genSalt(SALT_ROUND_FACTOR);
+  this.password = await bcrypt.hash(this.password, salt);
+  next();
 });
 
 const User = mongoose.model('User', UserSchema);

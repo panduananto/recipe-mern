@@ -4,12 +4,13 @@ import cors from 'cors';
 import dotenv from 'dotenv';
 
 import recipeRouter from './routes/recipe.js';
+import authRouter from './routes/auth.js';
 
 dotenv.config();
 
 const CONNECTION_URL = process.env.CONNECTION_URL;
 const PORT = process.env.PORT || 3001;
-const MONGOOSE_OPTION = { useNewUrlParser: true, useUnifiedTopology: true, useFindAndModify: false };
+const MONGOOSE_OPTION = { useNewUrlParser: true, useUnifiedTopology: true, useCreateIndex: true, useFindAndModify: false };
 
 const app = express();
 
@@ -23,3 +24,4 @@ mongoose
   .catch((error) => console.log(error.message));
 
 app.use('/api/recipe', recipeRouter);
+app.use('/api/auth', authRouter);
