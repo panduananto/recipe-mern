@@ -7,7 +7,7 @@ export const register = async (req, res, next) => {
   try {
     await user.save();
 
-    res.status(201).json(user);
+    sendToken(user, 201, res);
   } catch (error) {
     res.status(409).json({ message: error.message });
   }
@@ -33,8 +33,13 @@ export const login = async (req, res, next) => {
       res.status(404).json({ message: 'Your password is incorrect' });
     }
 
-    res.status(200).json({ token: 'JWT goes here' });
+    sendToken(user, 200, res);
   } catch (error) {
     res.status(500).json({ message: error.message });
   }
+};
+
+const sendToken = (user, statusCode, res) => {
+  const token = user.getSignedToken();
+  res.status(statusCode).json({ token });
 };
