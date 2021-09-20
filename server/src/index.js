@@ -5,6 +5,7 @@ import dotenv from 'dotenv';
 
 import recipeRouter from './routes/recipe.js';
 import authRouter from './routes/auth.js';
+import privateRouter from './routes/private.js';
 
 dotenv.config();
 
@@ -25,3 +26,4 @@ mongoose
 
 app.use('/api/recipe', recipeRouter);
 app.use('/api/auth', authRouter);
+app.use('/api/private', privateRouter);
